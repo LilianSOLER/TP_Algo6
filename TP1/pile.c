@@ -36,15 +36,16 @@ pnoeud_t depiler (ppile_t p)
   if(pile_vide(p)){
     return NULL;
   }
-  pnoeud_t res = p->Tab[p->sommet--];
-  p->Tab[p->sommet] = NULL;
-  return res;
+  pnoeud_t tmp = p->Tab[p->sommet];
+  p->sommet--;
+  return tmp;
 }
 
 int empiler (ppile_t p, pnoeud_t pn)
 {
   if(!pile_pleine(p)){
-    p->Tab[++p->sommet] = pn ;
+    p->sommet++;
+    p->Tab[p->sommet-1] = pn;
   return 1 ;
   }
   return 0;

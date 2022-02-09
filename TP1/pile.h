@@ -1,5 +1,5 @@
 
-#define MAX_PILE_SIZE       32
+#define MAX_PILE_SIZE 32
 
 
 typedef struct {
