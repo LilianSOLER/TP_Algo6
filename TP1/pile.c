@@ -23,7 +23,7 @@ int detruire_pile (ppile_t p)
 
 int pile_vide (ppile_t p)
 {
-    return (p->sommet =! 0);
+  return (p->sommet == 0);
 }
 
 int pile_pleine (ppile_t p)
@@ -36,9 +36,8 @@ pnoeud_t depiler (ppile_t p)
   if(pile_vide(p)){
     return NULL;
   }
-  pnoeud_t tmp = p->Tab[p->sommet];
   p->sommet--;
-  return tmp;
+  return p->Tab[p->sommet];
 }
 
 int empiler (ppile_t p, pnoeud_t pn)
