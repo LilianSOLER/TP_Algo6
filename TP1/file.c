@@ -8,6 +8,7 @@ pfile_t creer_file ()
   pfile_t f = (pfile_t) malloc (sizeof (file_t));
   f->tete = 0;
   f->queue = 0;
+  f->nb_elem = 0;
   return f;
 }
 
@@ -25,12 +26,12 @@ int detruire_file (pfile_t f)
 
 int file_vide (pfile_t f)
 {
-  return (f->queue == f->tete) && (f->Tab[f->tete] == NULL);
+  return (f->nb_elem == 0);
 }
 
 int file_pleine (pfile_t f)
 {
-  return ((f->queue - f->tete == 1) || (f->tete - f->queue  == MAX_FILE_SIZE - 1));
+  return (f->nb_elem == MAX_FILE_SIZE);
 }
 
 pnoeud_t defiler (pfile_t f)
@@ -38,22 +39,18 @@ pnoeud_t defiler (pfile_t f)
   if(file_vide(f)){
     return NULL;
   }
-  pnoeud_t res = f->Tab[f->tete--];
-  f->Tab[f->tete] = NULL;
-  return res;
+  f->nb_elem--;
+  f->tete = (f->tete + 1) % MAX_FILE_SIZE;
+  return f->Tab[f->tete];
 }
 
 int enfiler (pfile_t f, pnoeud_t p)
 {
   if(!file_pleine(f)){
-    if(f->queue == 0){
-      f->queue = MAX_FILE_SIZE - 1;
-    }
-    else{
-      f->queue--;
-    }
+    f->nb_elem++;
+    f->queue = (f->queue + 1) % MAX_FILE_SIZE;
     f->Tab[f->queue] = p;
-    return 1;
+    return 1 ;
   }
   else{
     return 0;
