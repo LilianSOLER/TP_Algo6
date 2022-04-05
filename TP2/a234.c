@@ -29,7 +29,22 @@ int NombreCles(Arbre234 a)
   /*
   Retourne le nombre de cles presentes dans l'arbre a
   */
- return 0;
+  if (a == NULL)
+    return 0;
+
+  switch (a->t)
+  {
+  case 0:
+    return 0;
+  case 2:
+    return 1 + NombreCles(a->fils[0]) + NombreCles(a->fils[1]);
+  case 3:
+    return 2 + NombreCles(a->fils[0]) + NombreCles(a->fils[1]) + NombreCles(a->fils[2]);
+  case 4:
+    return 3 + NombreCles(a->fils[0]) + NombreCles(a->fils[1]) + NombreCles(a->fils[2]) + NombreCles(a->fils[3]);
+  default:
+    return 0;
+  }
 }
 
 int CleMax(Arbre234 a)
@@ -37,7 +52,7 @@ int CleMax(Arbre234 a)
   /*
   Retourne plus grande cle de l'arbre a
   */
- return 0;
+  return 0;
 }
 
 int CleMin(Arbre234 a)
@@ -54,9 +69,9 @@ Arbre234 RechercherCle(Arbre234 a, int cle)
      rechercher si la cle a est presente dans
      l'arbre a. Si oui, retourne le noeud ou se trouve la cle.
   */
-
-  return NULL;
+return 0;
 }
+
 
 void AnalyseStructureArbre(Arbre234 a, int *feuilles, int *noeud2, int *noeud3, int *noeud4)
 {
@@ -167,6 +182,6 @@ int main(int argc, char **argv)
 
   basicMain(a);
   test_nb_cle(a);
-  test_cle_min(a);
-  test_cle_max(a);
+  // test_cle_min(a);
+  // test_cle_max(a);
 }
