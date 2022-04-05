@@ -29,23 +29,7 @@ int NombreCles(Arbre234 a)
   /*
   Retourne le nombre de cles presentes dans l'arbre a
   */
-
-  if (a == NULL)
-    return 0;
-
-  switch (a->t)
-  {
-  case 0:
-    return 0;
-  case 2:
-    return 1 + NombreCles(a->fils[0]) + NombreCles(a->fils[1]);
-  case 3:
-    return 2 + NombreCles(a->fils[0]) + NombreCles(a->fils[1]) + NombreCles(a->fils[2]);
-  case 4:
-    return 3 + NombreCles(a->fils[0]) + NombreCles(a->fils[1]) + NombreCles(a->fils[2]) + NombreCles(a->fils[3]);
-  default:
-    return 0;
-  }
+ return 0;
 }
 
 int CleMax(Arbre234 a)
@@ -53,53 +37,16 @@ int CleMax(Arbre234 a)
   /*
   Retourne plus grande cle de l'arbre a
   */
-  while (a->fils[0] != NULL){
-    a = a->fils[NombreCles(a)];
-  }
-  return a->cles[NombreCles(a)];
+ return 0;
 }
 
 int CleMin(Arbre234 a)
 {
-  
   /*
   Retourne plus petite cle de l'arbre a
   */
- /* while (a->fils[0] != NULL)
-  {
-    a = a->fils[0];
-    printf("%d\n", a->cles[0]);
-    afficher_arbre(a, 0);
-  }
-  printf("END WHILE\n");
-  return a->cles[0];*/
-  /*
-  int pos ;
-  int x=0;
-  if (A ==NULL )
-    return 0;
-  else {
-    pos = position (x, A) ;
-    if ( (x == A->cles [ pos ] ) )
-      return 1;
-    else
-      return RechercheCle (x+1, A->fils [ pos ] ) ;
+  return 0;
 }
-}
-int position (int x; Arbre234 a){}
-/* plus grand pos tel que A->cles[pos]
-x */
-/*
-int pos, trouve =0;
-for (pos=0; pos<a->n && !trouve; pos++){
-  trouve = (x<= a->cles[pos]);
-}
-return pos;
-*/
-
-return 0;
-}
-
 
 Arbre234 RechercherCle(Arbre234 a, int cle)
 {
