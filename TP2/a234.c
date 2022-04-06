@@ -26,25 +26,13 @@ int hauteur(Arbre234 a)
 
 int NombreCles(Arbre234 a)
 {
-  /*
-  Retourne le nombre de cles presentes dans l'arbre a
-  */
   if (a == NULL)
     return 0;
 
-  switch (a->t)
-  {
-  case 0:
+  if (a->t == 0)
     return 0;
-  case 2:
-    return 1 + NombreCles(a->fils[0]) + NombreCles(a->fils[1]);
-  case 3:
-    return 2 + NombreCles(a->fils[0]) + NombreCles(a->fils[1]) + NombreCles(a->fils[2]);
-  case 4:
-    return 3 + NombreCles(a->fils[0]) + NombreCles(a->fils[1]) + NombreCles(a->fils[2]) + NombreCles(a->fils[3]);
-  default:
-    return 0;
-  }
+
+  return  NombreCles(a->fils[0]) + NombreCles(a->fils[1]) + NombreCles(a->fils[2]) + NombreCles(a->fils[3]) + a->t - 1;
 }
 
 int CleMax(Arbre234 a)
@@ -69,9 +57,8 @@ Arbre234 RechercherCle(Arbre234 a, int cle)
      rechercher si la cle a est presente dans
      l'arbre a. Si oui, retourne le noeud ou se trouve la cle.
   */
-return 0;
+  return 0;
 }
-
 
 void AnalyseStructureArbre(Arbre234 a, int *feuilles, int *noeud2, int *noeud3, int *noeud4)
 {
@@ -125,6 +112,18 @@ void Detruire_Cle(Arbre234 *a, int cle)
   return;
 }
 
+Arbre234 read_arbre_in_arg(int argc, char *argv[])
+{
+  Arbre234 a = NULL;
+  if (argc != 2)
+  {
+    fprintf(stderr, "il manque le parametre nom de fichier\n");
+    exit(-1);
+  }
+  a = lire_arbre(argv[1]);
+  return a;
+}
+
 void basicMain(Arbre234 a)
 {
   printf("==== Afficher arbre ====\n");
@@ -138,12 +137,7 @@ void test_nb_cle(Arbre234 a)
 {
   printf("==== Test nombre cles ====\n");
   int nb_cle = NombreCles(a);
-  if (nb_cle != 17)
-  {
-    printf("Erreur NombreCles\n");
-  }
   printf("Nombre de cles : %d\n", nb_cle);
-  printf("\nDone\n\n");
 }
 
 void test_cle_min(Arbre234 a)
@@ -155,7 +149,6 @@ void test_cle_min(Arbre234 a)
     printf("Erreur CleMin\n");
   }
   printf("Cle min : %d\n", cle_min);
-  printf("\nDone\n\n");
 }
 
 void test_cle_max(Arbre234 a)
@@ -167,21 +160,11 @@ void test_cle_max(Arbre234 a)
     printf("Erreur CleMax\n");
   }
   printf("Cle max : %d\n", cle_max);
-  printf("\nDone\n\n");
 }
 
 int main(int argc, char **argv)
 {
-  Arbre234 a = NULL;
-  if (argc != 2)
-  {
-    fprintf(stderr, "il manque le parametre nom de fichier\n");
-    exit(-1);
-  }
-  a = lire_arbre(argv[1]);
-
+  Arbre234 a = read_arbre_in_arg(argc, argv);
   basicMain(a);
   test_nb_cle(a);
-  // test_cle_min(a);
-  // test_cle_max(a);
 }
