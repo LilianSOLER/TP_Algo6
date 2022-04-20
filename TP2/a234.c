@@ -171,8 +171,6 @@ void Detruire_Cle(Arbre234 *a, int cle)
 
 void basicMain(Arbre234 a)
 {
-  printf("==== Afficher arbre ====\n");
-
   afficher_arbre(a, 0);
 
   printf("\n");
