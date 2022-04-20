@@ -141,7 +141,7 @@ function test_analyse_struct($i)
   echo $disp_c;
   $disp_c = explode("\n", $disp_c);
   $nb = 0;
-  for($i = 0; $i <= 3; $i++){
+  for ($i = 0; $i <= 3; $i++) {
     $nb += explode(":", $disp_c[$i])[1];
   }
   if ($nb != $lign_r) {
@@ -154,40 +154,52 @@ function test_analyse_struct($i)
 }
 
 exec("make");
-
-// echo "Test Nombre clés\n";
-// for ($i = 1; $i <= 16; $i++) {
-//   test_nombre_cles($i);
-//   echo "\n";
-// }
-// echo "Done\n\n";
-
-// echo "Test clé max\n";
-// for ($i = 1; $i <= 16; $i++) {
-//   test_cle_max($i);
-//   echo "\n";
-// }
-// echo "Done\n";
-
-// echo "Test clé min\n";
-// for ($i = 1; $i <= 16; $i++) {
-//   test_cle_min($i);
-//   echo "\n";
-// }
-// echo "Done\n";
-
-// echo "Test Recherche clé\n";
-// for ($i = 1; $i <= 16; $i++) {
-//   test_recherche_cle($i);
-//   echo "\n";
-// }
-// echo "Done\n";
-
-echo "Test Analyse struct\n";
-for ($i = 1; $i <= 16; $i++) {
-  test_analyse_struct($i);
-  echo "\n";
+if (isset($argv[1])) {
+  switch ($argv[1]) {
+    case "nb_cles":
+      echo "Test Nombre clés\n";
+      for ($i = 1; $i <= 16; $i++) {
+        test_nombre_cles($i);
+        echo "\n";
+      }
+      echo "Done\n\n";
+      break;
+    case "cle_max":
+      echo "Test clé max\n";
+      for ($i = 1; $i <= 16; $i++) {
+        test_cle_max($i);
+        echo "\n";
+      }
+      echo "Done\n";
+      break;
+    case "cle_min":
+      echo "Test clé min\n";
+      for ($i = 1; $i <= 16; $i++) {
+        test_cle_min($i);
+        echo "\n";
+      }
+      echo "Done\n";
+      break;
+    case "recherche_cle":
+      echo "Test Recherche clé\n";
+      for ($i = 1; $i <= 16; $i++) {
+        test_recherche_cle($i);
+        echo "\n";
+      }
+      echo "Done\n";
+    case "analyse_struct":
+      echo "Test Analyse struct\n";
+      for ($i = 1; $i <= 16; $i++) {
+        test_analyse_struct($i);
+        echo "\n";
+      }
+      echo "Done\n";
+      break;
+    default:
+      echo "Paramètre inconnue\n";
+      break;
+  }
+} else {
+  echo "Il manque le parametre test\n";
 }
-echo "Done\n";
-
 exec("make clean");
