@@ -88,7 +88,33 @@ Arbre234 RechercherCle(Arbre234 a, int cle)
      rechercher si la cle a est presente dans
      l'arbre a. Si oui, retourne le noeud ou se trouve la cle.
   */
-  return 0;
+  if (a != NULL)
+  {
+    switch (a->t)
+    {
+    case 0:
+      return NULL;
+    case 2:
+      return cle == a->cles[1] ? a : cle < a->cles[1] ? RechercherCle(a->fils[1], cle)
+                                                      : RechercherCle(a->fils[2], cle);
+    case 3:
+      return (cle == a->cles[1] || cle == a->cles[2]) ? a : cle < a->cles[0]                     ? RechercherCle(a->fils[0], cle)
+                                                        : (cle > a->cles[0] && cle < a->cles[1]) ? RechercherCle(a->fils[1], cle)
+                                                                                                 : RechercherCle(a->fils[2], cle);
+    case 4:
+      return (cle == a->cles[0] || cle == a->cles[1] || cle == a->cles[2]) ? a : (cle < a->cles[0])                   ? RechercherCle(a->fils[0], cle)
+                                                                             : (cle > a->cles[0] && cle < a->cles[1]) ? RechercherCle(a->fils[1], cle)
+                                                                             : (cle > a->cles[1] && cle < a->cles[2]) ? RechercherCle(a->fils[2], cle)
+                                                                                                                      : RechercherCle(a->fils[3], cle);
+
+    default:
+      return NULL;
+    }
+  }
+  else
+  {
+    return NULL;
+  }
 }
 
 void AnalyseStructureArbre(Arbre234 a, int *feuilles, int *noeud2, int *noeud3, int *noeud4)
@@ -159,12 +185,17 @@ void test_nb_cle(Arbre234 a)
 
 void test_cle_min(Arbre234 a)
 {
-  printf("Cle min : %d\n", CleMin(a));
+  printf("Cle-min : %d\n", CleMin(a));
 }
 
 void test_cle_max(Arbre234 a)
 {
-  printf("Clé max : %d\n", CleMax(a));
+  printf("Clé-max : %d\n", CleMax(a));
+}
+
+void test_recherche_cle(Arbre234 a, int cle)
+{
+  printf("Recherche-de-la-cle-%d : %d\n", cle, RechercherCle(a, cle) != NULL);
 }
 
 int main(int argc, char **argv)
@@ -193,5 +224,18 @@ int main(int argc, char **argv)
   else if (strcmp(argv[2], "cle_max") == 0)
   {
     test_cle_max(a);
+  } else if (strcmp(argv[2], "recherche_cle") == 0)
+  {
+    if(argc < 4)
+    {
+      fprintf(stderr, "il manque le parametre cle\n");
+      exit(-1);
+    }
+    test_recherche_cle(a, atoi(argv[3]));
+  }
+  else
+  {
+    fprintf(stderr, "parametre inconnu\n");
+    exit(-1);
   }
 }
