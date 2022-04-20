@@ -98,7 +98,7 @@ Arbre234 RechercherCle(Arbre234 a, int cle)
       return cle == a->cles[1] ? a : cle < a->cles[1] ? RechercherCle(a->fils[1], cle)
                                                       : RechercherCle(a->fils[2], cle);
     case 3:
-      return (cle == a->cles[1] || cle == a->cles[2]) ? a : cle < a->cles[0]                     ? RechercherCle(a->fils[0], cle)
+      return (cle == a->cles[0] || cle == a->cles[1]) ? a : cle < a->cles[0]                     ? RechercherCle(a->fils[0], cle)
                                                         : (cle > a->cles[0] && cle < a->cles[1]) ? RechercherCle(a->fils[1], cle)
                                                                                                  : RechercherCle(a->fils[2], cle);
     case 4:
@@ -222,9 +222,10 @@ int main(int argc, char **argv)
   else if (strcmp(argv[2], "cle_max") == 0)
   {
     test_cle_max(a);
-  } else if (strcmp(argv[2], "recherche_cle") == 0)
+  }
+  else if (strcmp(argv[2], "recherche_cle") == 0)
   {
-    if(argc < 4)
+    if (argc < 4)
     {
       fprintf(stderr, "il manque le parametre cle\n");
       exit(-1);
