@@ -122,6 +122,33 @@ void AnalyseStructureArbre(Arbre234 a, int *feuilles, int *noeud2, int *noeud3, 
   /*
      calculer le nombre de feuilles, de 2-noeuds, 3-noeuds,et 4-noeuds
   */
+  if (a != NULL)
+  {
+    switch (a->t)
+    {
+    case 0:
+      *feuilles += 1;
+      break;
+    case 2:
+      *noeud2 += 1;
+      break;
+    case 3:
+      *noeud3 += 1;
+      break;
+    case 4:
+      *noeud4 += 1;
+      break;
+    default:
+      break;
+    }
+    for (int i = 0; i <= 4; i++)
+    {
+      if (a->fils[i] != NULL)
+      {
+        AnalyseStructureArbre(a->fils[i], feuilles, noeud2, noeud3, noeud4);
+      }
+    }
+  }
 }
 
 Arbre234 noeud_max(Arbre234 a)
@@ -196,6 +223,16 @@ void test_recherche_cle(Arbre234 a, int cle)
   printf("Recherche-de-la-cle-%d : %d\n", cle, RechercherCle(a, cle) != NULL);
 }
 
+void test_analyse_struct(Arbre234 a)
+{
+  int feuilles = 0, noeud2 = 0, noeud3 = 0, noeud4 = 0;
+  AnalyseStructureArbre(a, &feuilles, &noeud2, &noeud3, &noeud4);
+  printf("Feuilles : %d \n", feuilles);
+  printf("Noeud2 : %d \n", noeud2);
+  printf("Noeud3 : %d \n", noeud3);
+  printf("Noeud4 : %d \n", noeud4);
+}
+
 int main(int argc, char **argv)
 {
   Arbre234 a = NULL;
@@ -231,6 +268,10 @@ int main(int argc, char **argv)
       exit(-1);
     }
     test_recherche_cle(a, atoi(argv[3]));
+  }
+  else if (strcmp(argv[2], "analyse_struct") == 0)
+  {
+    test_analyse_struct(a);
   }
   else
   {
