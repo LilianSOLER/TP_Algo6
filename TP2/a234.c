@@ -151,13 +151,43 @@ void AnalyseStructureArbre(Arbre234 a, int *feuilles, int *noeud2, int *noeud3, 
   }
 }
 
+int noeud_sum(Arbre234 a)
+{
+  return (a == NULL || a->t == 0) ? 0 : a->cles[0] + a->cles[1] + a->cles[2];
+}
 Arbre234 noeud_max(Arbre234 a)
 {
   /*
     Retourne le noeud avec la somme maximale des cles internes
   */
+  if (a != NULL && a->t != 0)
+  {
+    Arbre234 *fils = malloc(sizeof(Arbre234) * 4);
+    for (int i = 0; i < 4; i++)
+    {
 
-  return NULL;
+      fils[i] = noeud_max(a->fils[i]);
+    }
+
+    int max = noeud_sum(a);
+    int j = 4;
+    for (int i = 0; i < 4; i++)
+    {
+      if (max < noeud_sum(fils[i]))
+      {
+        max = noeud_sum(fils[i]);
+        j = i;
+      }
+    }
+    
+    Arbre234 tmp = fils[j];
+    free(fils);
+    return j == 4 ? a : tmp;
+  }
+  else
+  {
+    return NULL;
+  }
 }
 
 void Afficher_Cles_Largeur(Arbre234 a)
@@ -233,6 +263,11 @@ void test_analyse_struct(Arbre234 a)
   printf("Noeud4 : %d \n", noeud4);
 }
 
+void test_noeud_max(Arbre234 a)
+{
+  printf("Noeud-max : %d\n", noeud_sum(noeud_max(a)));
+}
+
 int main(int argc, char **argv)
 {
   Arbre234 a = NULL;
@@ -272,6 +307,10 @@ int main(int argc, char **argv)
   else if (strcmp(argv[2], "analyse_struct") == 0)
   {
     test_analyse_struct(a);
+  }
+  else if (strcmp(argv[2], "noeud_max") == 0)
+  {
+    test_noeud_max(a);
   }
   else
   {

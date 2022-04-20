@@ -153,6 +153,11 @@ function test_analyse_struct($i)
   }
 }
 
+function test_noeud_max($i){
+  echo_a234($i);
+  echo nb_func_c($i, "noeud_max")[1];
+}
+
 exec("make");
 if (isset($argv[1])) {
   switch ($argv[1]) {
@@ -191,6 +196,14 @@ if (isset($argv[1])) {
       echo "Test Analyse struct\n";
       for ($i = 1; $i <= 16; $i++) {
         test_analyse_struct($i);
+        echo "\n";
+      }
+      echo "Done\n";
+      break;
+    case "noeud_max":
+      echo "Test Noeud max\n";
+      for ($i = 1; $i <= 16; $i++) {
+        test_noeud_max($i);
         echo "\n";
       }
       echo "Done\n";
