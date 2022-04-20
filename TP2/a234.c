@@ -27,34 +27,31 @@ int hauteur(Arbre234 a)
 
 int NombreCles(Arbre234 a)
 {
-  if (a == NULL)
+  if (a != NULL && a->t != 0)
+  {
+    return NombreCles(a->fils[0]) + NombreCles(a->fils[1]) + NombreCles(a->fils[2]) + NombreCles(a->fils[3]) + a->t - 1;
+  }
+  else
+  {
     return 0;
-
-  if (a->t == 0)
-    return 0;
-
-  return NombreCles(a->fils[0]) + NombreCles(a->fils[1]) + NombreCles(a->fils[2]) + NombreCles(a->fils[3]) + a->t - 1;
+  }
 }
 
 int CleMax(Arbre234 a)
 {
-  if (a == NULL)
+  if (a != NULL && a->t != 0)
   {
-    return -1;
+    if (a->t == 2 || a->t == 3)
+    {
+      return max(CleMax(a->fils[2]), a->cles[1]);
+    }
+    else
+    {
+      return max(CleMax(a->fils[3]), a->cles[2]);
+    }
   }
-  if (a->t == 0)
-  {
-    return -1;
-  }
-  else if (a->t == 2 || a->t == 3)
-  {
-    return max(CleMax(a->fils[2]), a->cles[1]);
-  }
-  else
-  {
-    return max(CleMax(a->fils[3]), a->cles[2]);
-  }
-  return 0;
+
+  return -1;
 }
 
 int CleMin(Arbre234 a)
@@ -82,12 +79,20 @@ int CleMin(Arbre234 a)
   }
 }
 
+/* Here is the explanation for the code above:
+ 1. If the tree is empty, return NULL.
+ 2. If the tree is not empty, check if the key is in the root.
+ 3. If the key is in the root, return the root.
+ 4. If the key is not in the root, check if the key is in the left or right subtree.
+ 5. If the key is in the left subtree, recursively call the function with the left subtree.
+ 6. If the key is in the right subtree, recursively call the function with the right subtree. */
 Arbre234 RechercherCle(Arbre234 a, int cle)
 {
   /*
      rechercher si la cle a est presente dans
      l'arbre a. Si oui, retourne le noeud ou se trouve la cle.
   */
+  
   if (a != NULL)
   {
     switch (a->t)
@@ -155,6 +160,12 @@ int noeud_sum(Arbre234 a)
 {
   return (a == NULL || a->t == 0) ? 0 : a->cles[0] + a->cles[1] + a->cles[2];
 }
+
+/* Here is the explanation for the code above:
+1. We allocate an array of the size of the tree to store the child nodes.
+2. We iterate through the tree and store each child node in the array.
+3. We then iterate through the array to find the node with the maximum value of the sum.
+4. We return the node that has the maximum value of the sum. */
 Arbre234 noeud_max(Arbre234 a)
 {
   /*
@@ -179,7 +190,7 @@ Arbre234 noeud_max(Arbre234 a)
         j = i;
       }
     }
-    
+
     Arbre234 tmp = fils[j];
     free(fils);
     return j == 4 ? a : tmp;

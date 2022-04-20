@@ -192,6 +192,7 @@ if (isset($argv[1])) {
         echo "\n";
       }
       echo "Done\n";
+      break;
     case "analyse_struct":
       echo "Test Analyse struct\n";
       for ($i = 1; $i <= 16; $i++) {
