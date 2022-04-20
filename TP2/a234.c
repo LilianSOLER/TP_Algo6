@@ -5,6 +5,7 @@
 #include "a234.h"
 
 #define max(a, b) ((a) > (b) ? (a) : (b))
+#define min(a, b) ((a) < (b) ? (a) : (b))
 
 int hauteur(Arbre234 a)
 {
@@ -32,14 +33,27 @@ int NombreCles(Arbre234 a)
   if (a->t == 0)
     return 0;
 
-  return  NombreCles(a->fils[0]) + NombreCles(a->fils[1]) + NombreCles(a->fils[2]) + NombreCles(a->fils[3]) + a->t - 1;
+  return NombreCles(a->fils[0]) + NombreCles(a->fils[1]) + NombreCles(a->fils[2]) + NombreCles(a->fils[3]) + a->t - 1;
 }
 
 int CleMax(Arbre234 a)
 {
-  /*
-  Retourne plus grande cle de l'arbre a
-  */
+  if (a == NULL)
+  {
+    return -1;
+  }
+  if (a->t == 0)
+  {
+    return -1;
+  }
+  else if (a->t == 2 || a->t == 3)
+  {
+    return max(CleMax(a->fils[2]), a->cles[1]);
+  }
+  else
+  {
+    return max(CleMax(a->fils[3]), a->cles[2]);
+  }
   return 0;
 }
 
@@ -48,7 +62,24 @@ int CleMin(Arbre234 a)
   /*
   Retourne plus petite cle de l'arbre a
   */
-  return 0;
+  int ind_min;
+  if (a != NULL && a->t != 0)
+  {
+    switch (a->t)
+    {
+    case 2:
+      ind_min = 1;
+      break;
+    default:
+      ind_min = 0;
+      break;
+    }
+    return CleMin(a->fils[ind_min]) == -1 ? a->cles[ind_min] : CleMin(a->fils[ind_min]);
+  }
+  else
+  {
+    return -1;
+  }
 }
 
 Arbre234 RechercherCle(Arbre234 a, int cle)
@@ -112,18 +143,6 @@ void Detruire_Cle(Arbre234 *a, int cle)
   return;
 }
 
-Arbre234 read_arbre_in_arg(int argc, char *argv[])
-{
-  Arbre234 a = NULL;
-  if (argc != 2)
-  {
-    fprintf(stderr, "il manque le parametre nom de fichier\n");
-    exit(-1);
-  }
-  a = lire_arbre(argv[1]);
-  return a;
-}
-
 void basicMain(Arbre234 a)
 {
   printf("==== Afficher arbre ====\n");
@@ -135,36 +154,44 @@ void basicMain(Arbre234 a)
 
 void test_nb_cle(Arbre234 a)
 {
-  printf("==== Test nombre cles ====\n");
-  int nb_cle = NombreCles(a);
-  printf("Nombre de cles : %d\n", nb_cle);
+  printf("Nombre-de-cles : %d\n", NombreCles(a));
 }
 
 void test_cle_min(Arbre234 a)
 {
-  printf("==== Test cle min ====\n");
-  int cle_min = CleMin(a);
-  if (cle_min != 1)
-  {
-    printf("Erreur CleMin\n");
-  }
-  printf("Cle min : %d\n", cle_min);
+  printf("Cle min : %d\n", CleMin(a));
 }
 
 void test_cle_max(Arbre234 a)
 {
-  printf("==== Test cle max ====\n");
-  int cle_max = CleMax(a);
-  if (cle_max != 50)
-  {
-    printf("Erreur CleMax\n");
-  }
-  printf("Cle max : %d\n", cle_max);
+  printf("Clé max : %d\n", CleMax(a));
 }
 
 int main(int argc, char **argv)
 {
-  Arbre234 a = read_arbre_in_arg(argc, argv);
-  basicMain(a);
-  test_nb_cle(a);
+  Arbre234 a = NULL;
+  if (argc < 3)
+  {
+    fprintf(stderr, "il manque le parametre nom de fichier\n");
+    exit(-1);
+  }
+
+  a = lire_arbre(argv[1]);
+
+  if (strcmp(argv[2], "display") == 0)
+  {
+    basicMain(a);
+  }
+  else if (strcmp(argv[2], "nb_cles") == 0)
+  {
+    test_nb_cle(a);
+  }
+  else if (strcmp(argv[2], "cle_min") == 0)
+  {
+    test_cle_min(a);
+  }
+  else if (strcmp(argv[2], "cle_max") == 0)
+  {
+    test_cle_max(a);
+  }
 }
