@@ -228,6 +228,7 @@ void Affichage_Cles_Triees_NonRecursive(Arbre234 a)
 */
 }
 
+/*
 void Detruire_Cle(Arbre234 *a, int cle)
 {
   Arbre234 tmp = (RechercheCle(*a,cle));
@@ -242,9 +243,18 @@ void Detruire_Cle(Arbre234 *a, int cle)
       }
       tmp->t --;
     }
+    //Cas où la clé est dans un noeud feuille avec une seule clé
+    //On devra alors remonter une clé d'un noeud frère "arrangeant" vers le noeud père PUIS le faire redescendre dans le noeud qui nous interesse
+    //On se retrouve alors dans le cas dejà traité avec au moins 2 clés
+    if(tmp->t == 1){
+      //NYI
+    }
+    //Cas où la clé est dans un noeud feuille avec une seule clé
+    //MAIS le noeud frère dispose aussi d'une seule clé ! -> ?
   }
   return;
 }
+*/
 
 void basicMain(Arbre234 a)
 {
