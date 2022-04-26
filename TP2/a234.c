@@ -246,11 +246,12 @@ void Affichage_Cles_Triees_NonRecursive(Arbre234 a)
    Afficher les cles en ordre croissant
    Cette fonction ne sera pas recursive
    Utiliser une pile
-*/
+  */
 }
 
+
 /*
-void Detruire_Cle(Arbre234 *a, int cle)
+void Detruire_Cle(Arbre234 *a, int cle) // Tout juste commencée mais on souhaite annoter nos idées en se basant sur les diapositives de cours
 {
   Arbre234 tmp = (RechercheCle(*a,cle));
   //On verifie si la clé est présente dans l'arbre

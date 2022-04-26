@@ -2,7 +2,7 @@ all: a234
 
 OPTIONS_COMPIL=-Wall -g -c
 
-a234: a234.o lire_affichage.o ajout_cle.o
+a234: a234.o lire_affichage.o ajout_cle.o pile.o
 	gcc -o a234 a234.o lire_affichage.o ajout_cle.o pile.o
 
 a234.o: a234.c a234.h
