@@ -213,10 +213,31 @@ void Afficher_Cles_Largeur(Arbre234 a)
 
 void Affichage_Cles_Triees_Recursive(Arbre234 a)
 {
-  /*
-     Afficher les cles en ordre croissant
-     Cette fonction sera recursive
-  */
+  //On distingue les cas avec 2,3 ou 4 fils et on fait le nombre d'appels recursifs necessaires
+  if (a!=NULL) {
+    if (a->t == 2) {
+      Affichage_Cles_Triees_Recursive(a->fils[1]);
+      printf("%d ", a->cles[1]);
+      Affichage_Cles_Triees_Recursive(a->fils[2]);
+    }
+    if (a->t == 3) {
+      Affichage_Cles_Triees_Recursive(a->fils[0]);
+      printf("%d ", a->cles[0]);
+      Affichage_Cles_Triees_Recursive(a->fils[1]);
+      printf("%d ", a->cles[1]);
+      Affichage_Cles_Triees_Recursive(a->fils[2]);
+    }
+    if (a->t == 4) {
+      Affichage_Cles_Triees_Recursive(a->fils[0]);
+      printf("%d ", a->cles[0]);
+      Affichage_Cles_Triees_Recursive(a->fils[1]);
+      printf("%d ", a->cles[1]);
+      Affichage_Cles_Triees_Recursive(a->fils[2]);
+      printf("%d ", a->cles[2]);
+      Affichage_Cles_Triees_Recursive(a->fils[3]);
+    }
+  }
+     
 }
 
 void Affichage_Cles_Triees_NonRecursive(Arbre234 a)
