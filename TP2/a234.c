@@ -230,10 +230,19 @@ void Affichage_Cles_Triees_NonRecursive(Arbre234 a)
 
 void Detruire_Cle(Arbre234 *a, int cle)
 {
-  /*
-    retirer la cle de l'arbre a
-  */
-
+  Arbre234 tmp = (RechercheCle(*a,cle));
+  //On verifie si la clé est présente dans l'arbre
+  if (tmp != NULL){
+    //Si la clé est dans une feuille et qu'il y a au moins 2 clés dans la feuille (cas le plus simple)
+    //On supprime la feuille sans se soucier du reste
+    if (tmp->t > 2){
+      for (int i = 0; i < tmp->t; i++){
+        if(tmp->cles[i] == cle){
+          free((tmp->cles[i]));
+      }
+      tmp->t --;
+    }
+  }
   return;
 }
 
