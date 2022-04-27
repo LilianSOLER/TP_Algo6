@@ -12,6 +12,10 @@ typedef struct s
   parc_t     liste_arcs ; // arcs sortants du sommet
   struct s   *sommet_suivant ; // sommet suivant dans le graphe
   int        couleur ; // couleur du sommet
+  int        explore ; 
+// Vaut 0 si le sommet n'est pas encore exploré (utilisé dans parcours en profondeur)
+// Vaut 1 si le sommet n'est pas encore TOTALEMENT exploité
+// Vaut 2 si le sommet est totalement exploité
 } sommet_t, *psommet_t ;
 
 /*
