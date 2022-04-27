@@ -181,8 +181,22 @@ void afficher_graphe_largeur (pgraphe_t g, int r)
 void afficher_graphe_profondeur (pgraphe_t g, int r)
 {
   /*
-    afficher les sommets du graphe avec un parcours en profondeur
+    afficher les sommets du graphe avec un parcours en profondeur en partant du sommet r
   */
+
+  //Existance de r dans le graphe g
+  psommet_t p = g;
+  while (p != NULL && p->label != r)
+  {
+    p = p->sommet_suivant;
+  }
+
+  if (p == NULL)
+  {
+    printf("r n'est pas dans le graphe, insèrez un label correct \n");
+    return;
+  }
+  // Partie "descendente"
   
   return ;
 }
