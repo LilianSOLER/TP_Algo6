@@ -250,9 +250,6 @@ void afficher_graphe_largeur (pgraphe_t g, int r)
 
 void afficher_graphe_profondeur (pgraphe_t g, int r)
 {
-  /*
-    afficher les sommets du graphe avec un parcours en profondeur en partant du sommet r
-  */
 
   //Existance de r dans le graphe g
   psommet_t p = g;
@@ -268,7 +265,60 @@ void afficher_graphe_profondeur (pgraphe_t g, int r)
   }
   // Partie "descendente"
   
-  return ;
+  ppile_t pile = creer_pile();
+  psommet_t sommetsvisites[nombre_sommets(g)];
+  sommetsvisites[0] = p;
+  int j = 1;
+  int k = j;
+  parc_t a;
+  int nbvisites = 1;
+  int size = nombre_sommets(g);
+
+  empiler(pile, p);
+
+  while (nbvisites <= size)
+  {
+    if (pile_vide(pile) == 0)
+    {
+      p = depiler(pile);
+      nbvisites++;
+
+      printf("%d ", p->label);
+
+      a = p->liste_arcs;
+      k = j;
+
+      while (a != NULL)
+      {
+        if (appartient_tableau(sommetsvisites, a->dest, g) == 0)
+        {
+          sommetsvisites[j] = a->dest;
+          j++;
+        }
+        a = a->arc_suivant;
+      }
+
+      for (int i = j - 1; i > k - 1; i--)
+      {
+        empiler(pile, sommetsvisites[i]);
+      }
+    }
+    else
+    {
+      p = g;
+      while (appartient_tableau(sommetsvisites, p, g) == 1)
+      {
+        p = p->sommet_suivant;
+      }
+      empiler(pile, p);
+      sommetsvisites[j] = p;
+      j++;
+    }
+  }
+
+  printf("\n");
+
+  return;
 }
 
 void algo_dijkstra (pgraphe_t g, int r)
