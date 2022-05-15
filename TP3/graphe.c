@@ -10,7 +10,22 @@
 #include <limits.h>
 
 #include "graphe.h"
+#include "pile.h"
+#include "file.h"
 
+int appartient_tableau(psommet_t *tableau, psommet_t p, pgraphe_t g)
+{
+  int i = 0;
+  while (tableau[i] != NULL && i < nombre_sommets(g))
+  {
+    if (tableau[i] == p)
+    {
+      return 1;
+    }
+    i++;
+  }
+  return 0;
+}
 
 psommet_t chercher_sommet (pgraphe_t g, int label)
 {
@@ -170,11 +185,66 @@ int colorier_graphe (pgraphe_t g)
 
 void afficher_graphe_largeur (pgraphe_t g, int r)
 {
-  /*
-    afficher les sommets du graphe avec un parcours en largeur
-  */
-  
-  return ;
+  psommet_t p = g;
+  while (p != NULL && p->label != r)
+  {
+    p = p->sommet_suivant;
+  }
+
+  if (p == NULL)
+  {
+    printf("Le sommet demandé n'est pas dans le graphe.\n");
+    return;
+  }
+
+  pfile_t file = creer_file();
+  psommet_t sommetsvisites[nombre_sommets(g)];
+  sommetsvisites[0] = p;
+  int j = 1;
+  parc_t a;
+  int nbvisites = 1;
+  int size = nombre_sommets(g);
+
+  enfiler(file, p);
+
+  while (nbvisites <= size)
+  {
+    if (file_vide(file) == 0)
+    {
+      p = defiler(file);
+      nbvisites++;
+
+      printf("%d ", p->label);
+
+      a = p->liste_arcs;
+
+      while (a != NULL)
+      {
+        if (appartient_tableau(sommetsvisites, a->dest, g) == 0)
+        {
+          enfiler(file, a->dest);
+          sommetsvisites[j] = a->dest;
+          j++;
+        }
+        a = a->arc_suivant;
+      }
+    }
+    else
+    {
+      p = g;
+      while (appartient_tableau(sommetsvisites, p, g) == 1)
+      {
+        p = p->sommet_suivant;
+      }
+      enfiler(file, p);
+      sommetsvisites[j] = p;
+      j++;
+    }
+  }
+
+  printf("\n");
+
+  return;
 }
 
 
