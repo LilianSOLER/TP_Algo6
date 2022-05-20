@@ -213,10 +213,31 @@ void Afficher_Cles_Largeur(Arbre234 a)
 
 void Affichage_Cles_Triees_Recursive(Arbre234 a)
 {
-  /*
-     Afficher les cles en ordre croissant
-     Cette fonction sera recursive
-  */
+  //On distingue les cas avec 2,3 ou 4 fils et on fait le nombre d'appels recursifs necessaires
+  if (a!=NULL) {
+    if (a->t == 2) {
+      Affichage_Cles_Triees_Recursive(a->fils[1]);
+      printf("%d ", a->cles[1]);
+      Affichage_Cles_Triees_Recursive(a->fils[2]);
+    }
+    if (a->t == 3) {
+      Affichage_Cles_Triees_Recursive(a->fils[0]);
+      printf("%d ", a->cles[0]);
+      Affichage_Cles_Triees_Recursive(a->fils[1]);
+      printf("%d ", a->cles[1]);
+      Affichage_Cles_Triees_Recursive(a->fils[2]);
+    }
+    if (a->t == 4) {
+      Affichage_Cles_Triees_Recursive(a->fils[0]);
+      printf("%d ", a->cles[0]);
+      Affichage_Cles_Triees_Recursive(a->fils[1]);
+      printf("%d ", a->cles[1]);
+      Affichage_Cles_Triees_Recursive(a->fils[2]);
+      printf("%d ", a->cles[2]);
+      Affichage_Cles_Triees_Recursive(a->fils[3]);
+    }
+  }
+     
 }
 
 void Affichage_Cles_Triees_NonRecursive(Arbre234 a)
@@ -225,17 +246,37 @@ void Affichage_Cles_Triees_NonRecursive(Arbre234 a)
    Afficher les cles en ordre croissant
    Cette fonction ne sera pas recursive
    Utiliser une pile
-*/
+  */
 }
 
-void Detruire_Cle(Arbre234 *a, int cle)
-{
-  /*
-    retirer la cle de l'arbre a
-  */
 
+/*
+void Detruire_Cle(Arbre234 *a, int cle) // Tout juste commencée mais on souhaite annoter nos idées en se basant sur les diapositives de cours
+{
+  Arbre234 tmp = (RechercheCle(*a,cle));
+  //On verifie si la clé est présente dans l'arbre
+  if (tmp != NULL){
+    //Si la clé est dans une feuille et qu'il y a au moins 2 clés dans la feuille (cas le plus simple)
+    //On supprime la feuille sans se soucier du reste
+    if (tmp->t > 2){
+      for (int i = 0; i < tmp->t; i++){
+        if(tmp->cles[i] == cle){
+          free((tmp->cles[i]));
+      }
+      tmp->t --;
+    }
+    //Cas où la clé est dans un noeud feuille avec une seule clé
+    //On devra alors remonter une clé d'un noeud frère "arrangeant" vers le noeud père PUIS le faire redescendre dans le noeud qui nous interesse
+    //On se retrouve alors dans le cas dejà traité avec au moins 2 clés
+    if(tmp->t == 1){
+      //NYI
+    }
+    //Cas où la clé est dans un noeud feuille avec une seule clé
+    //MAIS le noeud frère dispose aussi d'une seule clé ! -> ?
+  }
   return;
 }
+*/
 
 void basicMain(Arbre234 a)
 {
