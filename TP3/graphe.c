@@ -533,13 +533,10 @@ int distance(pgraphe_t g, int x, int y)
   if (chercher_sommet(g, x) != NULL && chercher_sommet(g, y) != NULL)
   {
     algo_dijkstra(g, x);
-    return chercher_sommet(g, y)->distance;
+    return chercher_sommet(g, y)->distance; // erreur car pas dijkstra et donc pas de champ distance dans les sommets
   }
-  else
-  {
-    printf("Un des deux sommet demandé n'est pas dans le graphe.\n");
-    return -1;
-  }
+  printf("Un des deux sommet demandé n'est pas dans le graphe.\n");
+  return -1;
 }
 
 int excentricite(pgraphe_t g, int n)
@@ -551,7 +548,22 @@ int excentricite(pgraphe_t g, int n)
   {
     if (p->distance > max)
     {
-      max = p->distance;
+      max = p->distance; // erreur car pas dijkstra et donc pas de champ distance dans les sommets
+    }
+    p = p->sommet_suivant;
+  }
+  return max;
+}
+
+int diametre(pgraphe_t g)
+{
+  int max = 0;
+  psommet_t p = g;
+  while (p)
+  {
+    if(excentricite(g, p->label) > max)
+    {
+      max = excentricite(g, p->label);
     }
     p = p->sommet_suivant;
   }

@@ -67,3 +67,7 @@ void afficher_graphe_profondeur(pgraphe_t g, int r);
 void afficher_graphe_largeur(pgraphe_t g, int r);
 
 void algo_dijkstra(pgraphe_t g, int r);
+
+int excentricite(pgraphe_t g, int n);
+
+int distance(pgraphe_t g, int x, int y);
