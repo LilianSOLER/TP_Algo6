@@ -379,8 +379,22 @@ int degre_entrant_sommet(pgraphe_t g, psommet_t s)
     Cette fonction retourne le nombre d'arcs entrants
     dans le noeud n dans le graphe g
   */
-
-  return 0;
+  psommet_t p = g;
+  int cpt = 0;
+  while (p)
+  {
+    parc_t a = p->liste_arcs;
+    while (a)
+    {
+      if (a->dest->label == s->label)
+      {
+        cpt++;
+      }
+      a = a->arc_suivant;
+    }
+    p = p->sommet_suivant;
+  }
+  return cpt;
 }
 
 int degre_maximal_graphe(pgraphe_t g)
@@ -389,7 +403,17 @@ int degre_maximal_graphe(pgraphe_t g)
     Max des degres des sommets du graphe g
   */
 
-  return 0;
+  int max = 0;
+  psommet_t p = g;
+  while (p)
+  {
+    if (degre_entrant_sommet(g, p) + degre_sortant_sommet(g, p) > max)
+    {
+      max = degre_entrant_sommet(g, p) + degre_sortant_sommet(g, p);
+    }
+    p = p->sommet_suivant;
+  }
+  return max;
 }
 
 int degre_minimal_graphe(pgraphe_t g)
@@ -397,8 +421,18 @@ int degre_minimal_graphe(pgraphe_t g)
   /*
     Min des degres des sommets du graphe g
   */
+  int min = nombre_sommets(g);
+  psommet_t p = g;
+  while (p)
+  {
+    if (degre_entrant_sommet(g, p) + degre_sortant_sommet(g, p) < min)
+    {
+      min = degre_entrant_sommet(g, p) + degre_sortant_sommet(g, p);
+    }
+    p = p->sommet_suivant;
+  }
 
-  return 0;
+  return min;
 }
 int elementaire(pgraphe_t g, pchemin_t c)
 {
