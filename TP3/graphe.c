@@ -528,6 +528,19 @@ int regulier(pgraphe_t g)
   return degre_minimal_graphe(g) == degre_maximal_graphe(g);
 }
 
+int distance(pgraphe_t g, int x, int y)
+{
+  if (chercher_sommet(g, x) != NULL && chercher_sommet(g, y) != NULL)
+  {
+    algo_dijkstra(g, x);
+    return chercher_sommet(g, y)->distance;
+  }
+  else
+  {
+    printf("Un des deux sommet demandé n'est pas dans le graphe.\n");
+    return -1;
+  }
+}
 /*
   placer les fonctions de l'examen 2017 juste apres
 */
