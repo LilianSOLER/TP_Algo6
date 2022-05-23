@@ -35,7 +35,13 @@ typedef struct a {
 /*
   pgraphe_t: pointeur vers le premier sommet d'un graphe
 */
+typedef psommet_t pgraphe_t ;
 
+typedef struct c {
+  psommet_t start;
+  parc_t arc;
+  struct c * suivant;
+} chemin_t, *pchemin_t ;
 typedef psommet_t pgraphe_t ;
 
 psommet_t chercher_sommet (pgraphe_t g, int label) ;

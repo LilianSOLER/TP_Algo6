@@ -13,7 +13,20 @@
 #include "pile.h"
 #include "file.h"
 
-int appartient_tableau(psommet_t *tableau, psommet_t p, pgraphe_t g)
+int appartient_tableau(parc_t *tableau, parc_t p, pgraphe_t g)
+{
+  int i = 0;
+  while (tableau[i] != NULL && i < nombre_arcs(g))
+  {
+    if (tableau[i] == p)
+    {
+      return 1;
+    }
+    i++;
+  }
+  return 0;
+}
+int appartient_tableau_arc(psommet_t *tableau, psommet_t p, pgraphe_t g)
 {
   int i = 0;
   while (tableau[i] != NULL && i < nombre_sommets(g))
@@ -346,8 +359,33 @@ int degre_sortant_sommet (pgraphe_t g, psommet_t s)
     Cette fonction retourne le nombre d'arcs sortants 
     du sommet n dans le graphe g
   */ 
+  if (g != NULL)
+  {
 
-  return 0 ;
+    psommet_t p = g;
+    while (p != s)
+    {
+      p = p->sommet_suivant;
+    }
+
+    if (p == NULL)
+    {
+      printf("Le sommet demandé  pas dans le graphe.\n");
+      return 0;
+    }
+
+    int dss = 0;                
+    parc_t arc = s->liste_arcs; 
+    while (arc != NULL)
+    {
+      dss++;
+      arc = arc->arc_suivant;
+    }
+    return dss;
+
+
+  }
+  return 0;
 }
 
 int degre_entrant_sommet (pgraphe_t g, psommet_t s)
@@ -378,8 +416,75 @@ int degre_minimal_graphe (pgraphe_t g)
 
   return 0 ;
 }
+int elementaire(pgraphe_t g, pchemin_t c)
+{
+  if (g != NULL && c != NULL)
+  {
+    psommet_t *sommetstrouves = malloc(sizeof(psommet_t) * nombre_sommets(g));
 
+    sommetstrouves[0] = c->start;
+    int j = 1;
+    while (c != NULL)
+    {
+      if (appartient_tableau(sommetstrouves, c->arc->dest, g) == 1)
+      {
+        return 0;
+      }
+      sommetstrouves[j] = c->arc->dest;
+      j++;
+      c = c->suivant;
+    }
+    return 1;
+  }
+  return 1;
+}
 
+int simple(pgraphe_t g, pchemin_t c)
+{
+  if (g != NULL && c != NULL)
+  {
+    parc_t *arcstrouves = malloc(sizeof(parc_t) * nombre_arcs(g));
+
+    arcstrouves[0] = c->arc;
+    int j = 1;
+    c = c->suivant;
+    while (c != NULL)
+    {
+      if (appartient_tableau_arc(arcstrouves, c->arc, g) == 1)
+      {
+        return 0;
+      }
+      arcstrouves[j] = c->arc;
+      j++;
+      c = c->suivant;
+    }
+    return 1;
+  }
+  return 1;
+}
+
+int eulerien (pgraphe_t g,pchemin_t c){
+if (g != NULL && c != NULL)
+  {
+    parc_t *arcstrouves = malloc(sizeof(parc_t) * nombre_arcs(g));
+    arcstrouves[0] = c->arc;
+    int j = 1;
+    c = c->suivant;
+    while (c != NULL){
+     if (appartient_tableau_arc(arcstrouves, c->arc, g) == 0)
+      {
+        arcstrouves[j] = c->arc;
+        j++;
+      }
+      c = c->suivant;
+    }
+    if(j!=nombre_arcs(g)){
+      return 0;
+    }
+    return 1;
+  }
+return 0;
+}
 int independant (pgraphe_t g)
 {
   /* Les aretes du graphe n'ont pas de sommet en commun */
