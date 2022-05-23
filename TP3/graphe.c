@@ -541,6 +541,22 @@ int distance(pgraphe_t g, int x, int y)
     return -1;
   }
 }
+
+int excentricite(pgraphe_t g, int n)
+{
+  int max = 0;
+  psommet_t p = g;
+  algo_dijkstra(g, n);
+  while (p)
+  {
+    if (p->distance > max)
+    {
+      max = p->distance;
+    }
+    p = p->sommet_suivant;
+  }
+  return max;
+}
 /*
   placer les fonctions de l'examen 2017 juste apres
 */
