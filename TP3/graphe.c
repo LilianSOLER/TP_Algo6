@@ -134,8 +134,7 @@ void init_couleur_sommet(pgraphe_t g)
   return;
 }
 
-int colorier_graphe(pgraphe_t g)
-{
+int colorier_graphe(pgraphe_t g){
   /*
     coloriage du graphe g
 
@@ -330,10 +329,7 @@ void afficher_graphe_profondeur(pgraphe_t g, int r)
 
 void algo_dijkstra(pgraphe_t g, int r)
 {
-  /*
-    algorithme de dijkstra
-    des variables ou des chanmps doivent etre ajoutees dans les structures.
-  */
+  
 
   return;
 }
@@ -528,6 +524,7 @@ int regulier(pgraphe_t g)
   return degre_minimal_graphe(g) == degre_maximal_graphe(g);
 }
 
+/*
 int distance(pgraphe_t g, int x, int y)
 {
   if (chercher_sommet(g, x) != NULL && chercher_sommet(g, y) != NULL)
@@ -541,6 +538,8 @@ int distance(pgraphe_t g, int x, int y)
     return -1;
   }
 }
+*/
+
 /*
   placer les fonctions de l'examen 2017 juste apres
 */
