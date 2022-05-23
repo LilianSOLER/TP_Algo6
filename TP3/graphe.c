@@ -509,15 +509,13 @@ int eulerien(pgraphe_t g, pchemin_t c)
 int independant(pgraphe_t g)
 {
   /* Les aretes du graphe n'ont pas de sommet en commun */
-
-  return 0;
+  return degre_maximal_graphe(g) <= 1;
 }
 
 int complet(pgraphe_t g)
 {
   /* Toutes les paires de sommet du graphe sont jointes par un arc */
-
-  return 0;
+  return nombre_sommets(g) * (nombre_sommets(g) - 1) / 2 == nombre_arcs(g);
 }
 
 int regulier(pgraphe_t g)
@@ -527,8 +525,7 @@ int regulier(pgraphe_t g)
      g est le ponteur vers le premier sommet du graphe
      renvoie 1 si le graphe est régulier, 0 sinon
   */
-
-  return 0;
+  return degre_minimal_graphe(g) == degre_maximal_graphe(g);
 }
 
 /*
