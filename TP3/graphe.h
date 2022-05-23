@@ -68,7 +68,6 @@ void afficher_graphe_largeur(pgraphe_t g, int r);
 
 void algo_dijkstra(pgraphe_t g, int r);
 
-/////////////////////////////////////////////////////
 // PARTIE 3 //
 
 int elementaire(pgraphe_t g, pchemin_t c);
@@ -88,4 +87,6 @@ int complet(pgraphe_t g);
 int regulier(pgraphe_t g);
 
 int distance(pgraphe_t g, int x, int y);
+
+int excentricite(pgraphe_t g, int n);
 
