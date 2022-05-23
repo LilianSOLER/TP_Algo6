@@ -30,6 +30,7 @@ typedef struct a
   int poids;             // poids de l arc
   psommet_t dest;        // pointeur sommet destinataire
   struct a *arc_suivant; // arc suivant
+  int explore;
 
 } arc_t, *parc_t;
 
@@ -70,11 +71,15 @@ void algo_dijkstra(pgraphe_t g, int r);
 
 // PARTIE 3 //
 
+void init_explore(pgraphe_t g);
+
 int elementaire(pgraphe_t g, pchemin_t c);
 
 int simple(pgraphe_t g, pchemin_t c);
 
 int eulerien(pgraphe_t g, pchemin_t c);
+
+int hamiltonien(pgraphe_t g, pchemin_t c);
 
 int degre_minimal_graphe(pgraphe_t g);
 

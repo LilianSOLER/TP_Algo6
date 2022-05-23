@@ -340,6 +340,17 @@ void algo_dijkstra(pgraphe_t g, int r)
 
 // ======================================================================
 
+void init_explore(pgraphe_t g)
+{
+  psommet_t p = g;
+  while (p != NULL)
+  {
+    p->explore = 0;
+    p = p->sommet_suivant;
+  }
+  return;
+}
+
 int degre_sortant_sommet(pgraphe_t g, psommet_t s)
 {
   /*
@@ -506,6 +517,25 @@ int eulerien(pgraphe_t g, pchemin_t c)
   }
   return 0;
 }
+
+int hamiltonien(pgraphe_t g, pchemin_t c)
+{
+  init_explore(g);
+  int nb_sommets_explore = 1;
+  c->start->explore = 1;
+  parc_t p = c->arc;
+  while (p)
+  {
+    if (p->dest->explore == 0)
+    {
+      p->dest->explore = 1;
+      nb_sommets_explore++;
+    }
+    p = p->arc_suivant;
+  }
+  return nb_sommets_explore == nombre_sommets(g);
+}
+
 int independant(pgraphe_t g)
 {
   /* Les aretes du graphe n'ont pas de sommet en commun */
